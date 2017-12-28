@@ -31,6 +31,14 @@ class UserController extends Controller {
     if (request.password.length > 20) {
       this.ctx.throw(500, '密码长度不能超过20位');
     }
+    if (!request.verify) {
+      this.ctx.throw(500, '验证码不能为空');
+    }
+
+    const validCode = await ctx.service.sms.checkVerifyCode(request.mobile, request.verify);
+    if (!validCode) {
+      this.ctx.throw(500, '验证码不正确');
+    }
 
     const isExist = await ctx.service.user.checkExistByMobile(request.mobile);
     if (isExist) {

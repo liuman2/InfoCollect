@@ -15,6 +15,7 @@ class UserService extends Service {
     params.password = str;
     params.salt = salt;
     params.date_created = new Date().toLocaleString();
+    delete params.verify;
 
     const result = await this.app.mysql.insert('user', params);
 
