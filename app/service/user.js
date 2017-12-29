@@ -21,7 +21,12 @@ class UserService extends Service {
 
     return {
       success: result.affectedRows === 1,
-      id: result.insertId,
+      message: '',
+      user: {
+        id: result.insertId,
+        nick_name: params.nick_name,
+        mobile: params.mobile,
+      },
     };
   }
 
