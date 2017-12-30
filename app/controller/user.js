@@ -36,7 +36,7 @@ class UserController extends Controller {
     }
 
     if (request.verify !== '33') {
-      const validCode = await ctx.service.sms.checkVerifyCode(request.mobile, request.verify);
+      const validCode = await ctx.service.sms.checkVerifyCode(request.mobile, request.verify, 1);
       if (!validCode) {
         this.ctx.throw(500, '验证码不正确');
       }
@@ -53,7 +53,6 @@ class UserController extends Controller {
 
   async login() {
     const { ctx } = this;
-
     const request = ctx.request.body;
     if (!request.mobile) {
       this.ctx.throw(500, '手机不能为空');
@@ -62,7 +61,7 @@ class UserController extends Controller {
       this.ctx.throw(500, '密码不能为空');
     }
 
-    const result = await ctx.service.user.register(request);
+    const result = await ctx.service.user.login(request);
     ctx.body = result;
   }
 

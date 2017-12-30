@@ -29,7 +29,6 @@ class UserService extends Service {
       },
     };
   }
-
   async checkExistByMobile(mobileNo) {
     const user = await this.app.mysql.get('user', { mobile: mobileNo });
     return user !== null;

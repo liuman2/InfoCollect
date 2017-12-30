@@ -27,11 +27,11 @@ class SmsService extends Service {
     };
   }
 
-  async checkVerifyCode(mobileNo, verify) {
+  async checkVerifyCode(mobileNo, verify, typeNo) {
     const results = await this.app.mysql.select('sms', {
-      where: { mobile: mobileNo },
-      columns: [ 'code' ], // 要查询的表字段
-      orders: [[ 'id', 'desc' ]], // 排序方式
+      where: { mobile: mobileNo, type: typeNo },
+      columns: [ 'code' ],
+      orders: [[ 'id', 'desc' ]],
       limit: 1, // 返回数据量
     });
 
