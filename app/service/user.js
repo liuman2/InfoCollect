@@ -33,6 +33,29 @@ class UserService extends Service {
     const user = await this.app.mysql.get('user', { mobile: mobileNo });
     return user !== null;
   }
+
+  async signin(request) {
+    const user = await this.app.mysql.get('user', { mobile: request.mobile });
+    if (!user) {
+      return null;
+    }
+
+    const md5 = Crypto.createHash('md5');
+    const saltPassword = `${request.password}:${user.salt}`;
+    const str = md5.update(saltPassword).digest('hex');
+    if (str !== user.password) {
+      return null;
+    }
+
+    const { id, mobile, nick_name, date_created } = user;
+    return {
+      id,
+      mobile,
+      nick_name,
+      date_created,
+    };
+  }
+
   async find(uid) {
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
     const user = await this.app.mysql.get('user', { id: uid });

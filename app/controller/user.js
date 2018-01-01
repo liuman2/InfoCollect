@@ -51,7 +51,7 @@ class UserController extends Controller {
     ctx.body = result;
   }
 
-  async login() {
+  async signin() {
     const { ctx } = this;
     const request = ctx.request.body;
     if (!request.mobile) {
@@ -61,8 +61,15 @@ class UserController extends Controller {
       this.ctx.throw(500, '密码不能为空');
     }
 
-    const result = await ctx.service.user.login(request);
-    ctx.body = result;
+    const user = await ctx.service.user.signin(request);
+    if (!user) {
+      this.ctx.throw(500, '用户名或密码不正确');
+    }
+
+    
+
+    const { id, mobile, nick_name } = user;
+    ctx.body = { id, mobile, nick_name };
   }
 
   async info() {
