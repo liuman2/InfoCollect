@@ -12,4 +12,6 @@ module.exports = app => {
 
   router.get('/api/user/:id', controller.user.info);
   router.post('/api/sms/verify', controller.sms.verify);
+
+  router.post('/api/attachment/upload', controller.attachment.upload);
 };
