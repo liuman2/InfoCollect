@@ -43,6 +43,16 @@ class ProfileController extends Controller {
     const profile = await ctx.service.profile.save(request);
     ctx.body = profile;
   }
+
+  async get() {
+    const { ctx } = this;
+    const userId = ctx.query.user_id;
+    const profileInfo = await ctx.service.profile.find(userId);
+    ctx.body = {
+      success: profileInfo !== null,
+      profile: profileInfo,
+    };
+  }
 }
 
 module.exports = ProfileController;

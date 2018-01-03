@@ -14,7 +14,7 @@ class SmsController extends Controller {
       this.ctx.throw(500, '您没有权限获取验证码');
     }
 
-    await ctx.service.sms.sendSms(request.mobile);
+    await ctx.service.sms.sendSms(request);
     ctx.body = true;
   }
 }

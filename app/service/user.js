@@ -56,6 +56,27 @@ class UserService extends Service {
     };
   }
 
+  async resetPassword(request) {
+    const user = await this.app.mysql.get('user', { mobile: request.mobile });
+    if (!user) {
+      return {
+        success: false,
+        message: '该用户不存在',
+      };
+    }
+
+    const md5 = Crypto.createHash('md5');
+    const saltPassword = `${request.password}:${user.salt}`;
+    const str = md5.update(saltPassword).digest('hex');
+    user.password = str;
+
+    const result = await this.app.mysql.update('user', user);
+    return {
+      success: result.affectedRows === 1,
+      message: '',
+    };
+  }
+
   async find(uid) {
     // 假如 我们拿到用户 id 从数据库获取用户详细信息
     const user = await this.app.mysql.get('user', { id: uid });

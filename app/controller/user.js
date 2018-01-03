@@ -36,7 +36,7 @@ class UserController extends Controller {
     }
 
     if (request.verify !== '33') {
-      const validCode = await ctx.service.sms.checkVerifyCode(request.mobile, request.verify, 1);
+      const validCode = await ctx.service.sms.checkVerifyCode(request.mobile, request.verify, 0);
       if (!validCode) {
         this.ctx.throw(500, '验证码不正确');
       }
@@ -66,10 +66,37 @@ class UserController extends Controller {
       this.ctx.throw(500, '用户名或密码不正确');
     }
 
-    
+    const profileIsFull = await ctx.service.profile.checkFull(user.id);
 
     const { id, mobile, nick_name } = user;
-    ctx.body = { id, mobile, nick_name };
+    ctx.body = { id, mobile, nick_name, profileIsFull };
+  }
+
+  async resetPassword() {
+    const { ctx } = this;
+    const request = ctx.request.body;
+    if (!request.mobile) {
+      this.ctx.throw(500, '手机不能为空');
+    }
+    if (request.mobile.length > 20) {
+      this.ctx.throw(500, '手机号码不正确');
+    }
+    if (!request.password) {
+      this.ctx.throw(500, '密码不能为空');
+    }
+    if (request.password.length > 20) {
+      this.ctx.throw(500, '密码长度不能超过20位');
+    }
+    if (!request.verify) {
+      this.ctx.throw(500, '验证码不能为空');
+    }
+    const validCode = await ctx.service.sms.checkVerifyCode(request.mobile, request.verify, 1);
+    if (!validCode) {
+      this.ctx.throw(500, '验证码不正确');
+    }
+
+    const result = await ctx.service.user.resetPassword(request);
+    ctx.body = result;
   }
 
   async info() {

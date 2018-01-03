@@ -4,21 +4,25 @@ const http = require('http');
 const Service = require('egg').Service;
 
 class SmsService extends Service {
-  async sendSms(mobileNo) {
+  async sendSms(request) {
     const smsRoot = 'http://api.sms.cn/sms/';
     const pwd = '21a4dc623cfd0b301611c2bf7886437d';
 
     const verifyCode = Math.random().toString().slice(2, 8);
     const content = encodeURIComponent(`您的验证码：${verifyCode}。如非本人操作，可不用理会！【乐享惠 】`);
-    const params = `?ac=send&uid=zps840904&pwd=${pwd}&mobile=${mobileNo}&content=${content}`;
+    const params = `?ac=send&uid=zps840904&pwd=${pwd}&mobile=${request.mobile}&content=${content}`;
     const url = `${smsRoot}${params}`;
 
     await http.get(url);
+    const types = {
+      register: 0,
+      retrieve: 1,
+    };
 
     const result = await this.app.mysql.insert('sms', {
-      mobile: mobileNo,
+      mobile: request.mobile,
       code: verifyCode,
-      type: 1,
+      type: types[request.type],
       date_created: new Date().toLocaleString(),
     });
 
