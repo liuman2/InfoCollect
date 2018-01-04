@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50712
 File Encoding         : 65001
 
-Date: 2018-01-03 00:54:35
+Date: 2018-01-05 01:19:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,11 +30,35 @@ CREATE TABLE `accesstoken` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for contact
+-- ----------------------------
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `contact_id` int(11) DEFAULT NULL,
+  `name` varchar(60) DEFAULT NULL,
+  `phone1` varchar(30) DEFAULT NULL,
+  `phone2` varchar(30) DEFAULT NULL,
+  `phone3` varchar(30) DEFAULT NULL,
+  `email1` varchar(100) DEFAULT NULL,
+  `email2` varchar(100) DEFAULT NULL,
+  `email3` varchar(100) DEFAULT NULL,
+  `address1` varchar(255) DEFAULT NULL,
+  `address2` varchar(255) DEFAULT NULL,
+  `organization_name` varchar(200) DEFAULT NULL,
+  `organization_title` varchar(100) DEFAULT NULL,
+  `birthday` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for profile
 -- ----------------------------
 DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `gender` tinyint(1) DEFAULT NULL,
@@ -53,7 +77,7 @@ CREATE TABLE `profile` (
   `date_created` datetime DEFAULT NULL,
   `date_modify` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for sms
@@ -66,7 +90,7 @@ CREATE TABLE `sms` (
   `type` tinyint(1) DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
@@ -81,4 +105,4 @@ CREATE TABLE `user` (
   `status` tinyint(1) DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
