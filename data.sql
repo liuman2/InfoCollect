@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 127...1
-Source Server Version : 50712
+Source Server         : localhost
+Source Server Version : 50711
 Source Host           : localhost:3306
 Source Database       : lexianghui
 
 Target Server Type    : MYSQL
-Target Server Version : 50712
+Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2018-01-05 01:19:13
+Date: 2018-01-05 15:25:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,7 +51,30 @@ CREATE TABLE `contact` (
   `birthday` datetime DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=291 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `login_log`;
+CREATE TABLE `login_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `country` varchar(60) DEFAULT NULL,
+  `province` varchar(60) DEFAULT NULL,
+  `city` varchar(60) DEFAULT NULL,
+  `district` varchar(60) DEFAULT NULL,
+  `street` varchar(60) DEFAULT NULL,
+  `street_num` varchar(20) DEFAULT NULL,
+  `address` varchar(300) DEFAULT NULL,
+  `latitude` varchar(20) DEFAULT NULL,
+  `longitude` varchar(20) DEFAULT NULL,
+  `altitude` varchar(20) DEFAULT NULL,
+  `os` varchar(10) DEFAULT NULL,
+  `ip` varchar(20) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for profile
@@ -77,7 +100,7 @@ CREATE TABLE `profile` (
   `date_created` datetime DEFAULT NULL,
   `date_modify` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for sms
@@ -105,4 +128,4 @@ CREATE TABLE `user` (
   `status` tinyint(1) DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
