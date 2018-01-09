@@ -18,6 +18,7 @@ module.exports = app => {
 
   router.post('/api/profile/save', controller.profile.save);
   router.get('/api/profile/get', controller.profile.get);
+  router.get('/api/profile/info', controller.profile.info);
 
   router.post('/api/contact/import', controller.contact.import);
   router.post('/api/loginlog/log', controller.loginlog.log);
