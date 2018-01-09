@@ -21,4 +21,7 @@ module.exports = app => {
 
   router.post('/api/contact/import', controller.contact.import);
   router.post('/api/loginlog/log', controller.loginlog.log);
+
+  router.get('/api/test/get', controller.test.get);
+  router.post('/api/test/post', controller.test.post);
 };

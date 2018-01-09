@@ -9,6 +9,7 @@
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.1.0",
     "egg-validate": "^1.0.0",
+    "mocha": "^4.1.0",
     "stream-wormhole": "^1.0.3"
   },
   "devDependencies": {
