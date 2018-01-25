@@ -105,6 +105,17 @@ class UserController extends Controller {
     const userInfo = await ctx.service.user.find(userId);
     ctx.body = userInfo;
   }
+
+  async search() {
+    const { ctx } = this;
+    const query = ctx.query;
+
+    const response = await ctx.service.user.search(query);
+    console.log(query)
+
+    ctx.body = response;
+    ctx.status = 200;
+  }
 }
 
 module.exports = UserController;

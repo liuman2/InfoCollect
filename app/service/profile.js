@@ -53,6 +53,43 @@ class ProfileService extends Service {
     return !!(profile.name && profile.gender !== null && profile.card_no && profile.card_front && profile.card_back &&
     profile.card_hold && profile.self_photo && profile.address && profile.contact && profile.tel);
   }
+
+  async detail(id) {
+    const profile = await this.app.mysql.get('profile', { id: id });
+    profile.protocols = [];
+    if (profile && profile.protocol) {
+      const protocols = profile.protocol.split(',');
+      profile.protocols = protocols;
+    }
+    delete profile.protocol;
+    return profile;
+  }
+
+  async pass(profileId) {
+    const profile = await this.app.mysql.get('profile', { id: profileId });
+    profile.status = 1;
+    const result = await this.app.mysql.update('profile', profile);
+
+    // 判断更新成功
+    return {
+      success: result.affectedRows === 1,
+      message: '',
+    };
+  }
+
+  async refuse(req) {
+    const profile = await this.app.mysql.get('profile', { id: req.id });
+    profile.status = 2;
+    profile.refuse = req.refuse;
+    const result = await this.app.mysql.update('profile', profile);
+
+    // 判断更新成功
+    return {
+      success: result.affectedRows === 1,
+      message: '',
+    };
+  }
+  
 }
 
 module.exports = ProfileService;

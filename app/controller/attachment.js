@@ -10,9 +10,8 @@ const Controller = require('egg').Controller;
 class AttachmentController extends Controller {
   async upload() {
     const { ctx } = this;
-    const userId = ctx.queries.u[0] || 0;
     const stream = await this.ctx.getFileStream();
-    const filename = userId + '_' + new Date().getTime() + path.extname(stream.filename).toLowerCase();
+    const filename = new Date().getTime() + path.extname(stream.filename).toLowerCase();
     const target = path.join(this.config.baseDir, 'app/public/photos', filename);
     const writeStream = fs.createWriteStream(target);
     try {

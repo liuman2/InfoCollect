@@ -68,6 +68,38 @@ class ProfileController extends Controller {
       },
     };
   }
+
+  async detail() {
+    const { ctx } = this;
+    const id = ctx.query.id;
+
+    const profileInfo = await ctx.service.profile.detail(id);
+    ctx.body = {
+      success: profileInfo !== null,
+      profile: profileInfo,
+    };
+    ctx.status = 200;
+  }
+
+  async pass() {
+    const { ctx } = this;
+    const id = ctx.query.id;
+
+    const result = await ctx.service.profile.pass(id);
+    console.log(result)
+    ctx.body = result;
+    ctx.status = 200;
+  }
+
+  async refuse() {
+    const { ctx } = this;
+    const request = ctx.request.body;
+
+    const result = await ctx.service.profile.refuse(request);
+    console.log(result)
+    ctx.body = result;
+    ctx.status = 200;
+  }
 }
 
 module.exports = ProfileController;

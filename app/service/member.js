@@ -1,30 +1,42 @@
 'use strict';
 
 const Service = require('egg').Service;
+const Crypto = require('crypto');
 
 class MemberService extends Service {
-  // 默认不需要提供构造函数。
-  // constructor(ctx) {
-  //   super(ctx); 如果需要在构造函数做一些处理，一定要有这句话，才能保证后面 `this.ctx`的使用。
-  //   // 就可以直接通过 this.ctx 获取 ctx 了
-  //   // 还可以直接通过 this.app 获取 app 了
-  // }
+  async login(request) {
+    const condition = { name: request.username };
+    const record = await this.app.mysql.get('admin', condition);
 
-  async find(uid) {
-    // // 假如 我们拿到用户 id 从数据库获取用户详细信息
-    // const user = await this.ctx.db.query('select * from user where uid = ?', uid);
+    if (!record) {
+      return {
+        success: false,
+        message: '用户不存在',
+        data: null,
+      };
+    }
 
-    // // 假定这里还有一些复杂的计算，然后返回需要的信息。
-    // const picture = await this.getPicture(uid);
+    const md5 = Crypto.createHash('md5');
+    const saltPassword = `${request.password}:${record.salt}`;
+    const str = md5.update(saltPassword).digest('hex');
+    if (str !== record.password) {
+      return {
+        success: false,
+        message: '密码不正确',
+        data: null,
+      };
+    }
 
+    const { id, name, date_created } = record;
     return {
-      name: 'user.user_name',
-      age: 'user.age',
+      success: true,
+      message: null,
+      user: {
+        id,
+        name,
+        date_created,
+      },
     };
-  }
-  async getPicture(uid) {
-    const result = await this.ctx.curl(`http://photoserver/uid=${uid}`, { dataType: 'json' });
-    return result.data;
   }
 }
 

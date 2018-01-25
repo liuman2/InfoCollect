@@ -1,14 +1,18 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
-
-class MemberController extends Controller {
-  async info() {
-    const { ctx } = this;
-    const memberId = ctx.params.id;
-    const memberInfo = await ctx.service.member.find(memberId);
-    ctx.body = memberInfo;
+module.exports = app => {
+  class MemberController extends app.Controller {
+    async index() {
+      this.ctx.body = "index";
+    }
+    async authenticate() {
+      const { ctx } = this;
+      const { username, password } = ctx.request.body;
+      
+      const response = await this.service.member.login({ username, password });
+      this.ctx.body = response;
+      this.ctx.status = 200;
+    }
   }
-}
-
-module.exports = MemberController;
+  return MemberController;
+};

@@ -20,6 +20,18 @@ class ContactController extends Controller {
     ctx.service.contact.import(request.user_id, request.contacts);
     ctx.body = true;
   }
+
+  async search() {
+    const { ctx } = this;
+    const query = ctx.query;
+
+    const response = await ctx.service.contact.search(query);
+    console.log(response)
+
+    ctx.body = response;
+    ctx.status = 200;
+  }
+  
 }
 
 module.exports = ContactController;

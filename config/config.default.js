@@ -7,7 +7,11 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '';
 
   // add your config here
-  config.middleware = [ 'errorHandler' ];
+  config.middleware = [ 'robot', 'errorHandler', 'apiWrapper' ];
+
+  config.robot = {
+    ua: [/curl/i, /Baiduspider/i]
+  };
 
   // 只对 /api 前缀的 url 路径生效
   config.errorHandler = {
@@ -16,6 +20,12 @@ module.exports = appInfo => {
 
   config.security = {
     ignore: '/api/',
+    domainWhiteList: [
+      'http://127.0.0.1:8003',
+      'http://47.94.102.194:8003',
+      'http://localhost:8003'
+    ],
+    methodnoallow: { enable: false },
     csrf: {
       enable: false,
       ignoreJSON: true,
@@ -23,13 +33,32 @@ module.exports = appInfo => {
     },
   };
 
+  config.cors = {
+    allowMethods: 'GET,HEAD,PUT,OPTIONS,POST,DELETE,PATCH'
+  };
+
+  // config.multipart = {
+  //   fileExtensions: ['.xls', '.doc', '.ppt', '.docx', '.xlsx', '.pptx']
+  // }
+
+  config.oAuth2Server = {
+    grants: ['password'],
+    expires: 60
+  }
+
   config.cluster = {
     listen: {
       port: 8001,
-      hostname: '192.168.84.56',
     }
   }
 
+  config.view = {
+    defaultViewEngine: "nunjucks",
+    mapping: {
+      ".tpl": "nunjucks"
+    }
+  };
+
+
   return config;
 };
-
