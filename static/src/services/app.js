@@ -2,7 +2,7 @@ import { request } from "../utils";
 
 export async function login(params) {
   return request({
-    url: "/member/authorize",
+    url: "/api/member/authorize",
     // url: '/oauth2/access_token',
     method: "POST",
     data: {

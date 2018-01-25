@@ -17,13 +17,13 @@ module.exports = app => {
   // app.put('/api/table',app.oAuth2Server.authenticate(), 'tableinfo.update');
   // app.del('/api/table/:res',app.oAuth2Server.authenticate(), 'tableinfo.destroy');
 
-  // app.post('/member/authorize', 'member.authenticate');
+  // app.post('/api/member/authorize', 'member.authenticate');
   // app.all('/oauth2/access_token', app.oAuth2Server.token());
   // app.get('/user/authenticate', app.oAuth2Server.authenticate(), 'user.authenticate');
 
   const { router, controller } = app;
 
-  router.post('/member/authorize', controller.member.authenticate);
+  router.post('/api/member/authorize', controller.member.authenticate);
   router.get('/api/user/search', controller.user.search);
 
   router.get('/api/profile/detail', controller.profile.detail);

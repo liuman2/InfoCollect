@@ -12,7 +12,7 @@ const fetch = async options => {
   let pdata;
 
   // TODO:
-  // if (url.includes("/member/authorize")) {
+  // if (url.includes("/api/member/authorize")) {
   //   pdata = {
   //     grant_type: "password",
   //     username: data.username,
@@ -31,7 +31,7 @@ const fetch = async options => {
   //     };
   //   }
   //   console.log(tokenData);
-  // } else if (!url.includes("/member/authorize") && Cookie.get("SESSION_NP")) {
+  // } else if (!url.includes("/api/member/authorize") && Cookie.get("SESSION_NP")) {
   //   if (Cookie.get("SESSION_TOKEN")) {
   //     authHeader = { headers: { Authorization: Cookie.get("SESSION_TOKEN") } };
   //   } else {
