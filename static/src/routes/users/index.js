@@ -85,9 +85,9 @@ class Users extends Component {
 				if (e.key === '1') {
 					this.toUserDetail(record.id);
 				} else {
-					this.toContactList(record.user_id);
+					// this.toContactList(record.user_id);
 				}
-			}} menuOptions={[{ key: '1', name: '详情' }, { key: '2', name: '通讯录' }]} />
+			}} menuOptions={[{ key: '1', name: '详情' }]} />
 		};
 	}
 
