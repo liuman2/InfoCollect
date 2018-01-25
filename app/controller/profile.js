@@ -65,6 +65,7 @@ class ProfileController extends Controller {
         name: profileInfo.name,
         status: profileInfo.status,
         self_photo: profileInfo.self_photo,
+        refuse:profileInfo.refuse,
       },
     };
   }

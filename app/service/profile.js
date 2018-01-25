@@ -28,6 +28,11 @@ class ProfileService extends Service {
       profile.county = null;
       profile.date_modify = new Date().toLocaleString();
       profile.protocol = req.protocol;
+
+      if (profile.status == 2) {
+        profile.status = 0;
+      }
+
       result = await this.app.mysql.update('profile', profile);
     }
 
