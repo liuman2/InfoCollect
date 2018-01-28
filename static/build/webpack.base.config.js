@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require("path");
 const sourcePath = path.join(__dirname, "./static/src");
 const outputPath = path.join(__dirname, "./../../app/view/public/");
@@ -18,6 +19,7 @@ const postcssBasePlugins = [
 module.exports = {
   entry: {
     index: "./static/src/index.js",
+    mobile: "./static/src/mobile.js",
     vendor: ["react", "react-dom", "whatwg-fetch"]
   },
   output: {
@@ -129,13 +131,25 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"],
     modules: [sourcePath, "node_modules"]
-  },
+  },  
   plugins: [
     new ExtractTextPlugin("public/css/[name].css"),
     new webpack.optimize.CommonsChunkPlugin({
       names: ["vendor"],
       minChunks: Infinity,
       filename: "public/js/[name].js"
-    })
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './static/src/index.html',
+      inject: true,
+      // chunks: ['vendor', 'index']
+    }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'mobile.html',
+    //   template: './static/src/mobile.html',
+    //   inject: true,
+    //   chunks: ['mobile']
+    // })
   ]
 };
