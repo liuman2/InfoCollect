@@ -13,6 +13,15 @@ module.exports = app => {
       this.ctx.body = response;
       this.ctx.status = 200;
     }
+
+    async changepwd() {
+      const { ctx } = this;
+      const { uid, password } = ctx.request.body;
+      
+      const response = await this.service.member.changepwd({ uid, password });
+      this.ctx.body = response;
+      this.ctx.status = 200;
+    }
   }
   return MemberController;
 };

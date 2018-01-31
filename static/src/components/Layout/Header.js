@@ -40,9 +40,9 @@ function Header ({ user, logout, changePassword, switchSider, siderFold, isNavba
           }} title={< span > <Icon type="user" />
             {user.name} < /span>}
           >
-            {/* <Menu.Item key="changePassword">
+            <Menu.Item key="changePassword">
               <a>修改密码</a>
-            </Menu.Item> */}
+            </Menu.Item>
             <Menu.Item key="logout">
               <a>注销</a>
             </Menu.Item>

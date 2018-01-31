@@ -80,18 +80,20 @@ class Users extends Component {
 		super(props, context);
 
 		const len = columns.length;
-		columns[len - 1].render = (text, record, index) => {
-			return <DropOption onMenuClick={e => {
-				if (e.key === '1') {
-					this.toUserDetail(record.id);
-				} else {
-					// this.toContactList(record.user_id);
-				}
-			}} menuOptions={[{ key: '1', name: '详情' }]} />
-		};
-	}
 
-	
+		columns[len - 1].render = (text, record, index) => {
+			return (
+				<div>
+					<span
+						onClick={this.toUserDetail.bind(this, record.id)}
+						style={linkStyle}
+					>
+						详情
+					</span>
+				</div>
+			);
+		};
+	}	
 
 	componentDidMount() {
 		this.loadUserData();

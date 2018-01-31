@@ -68,6 +68,12 @@ const App = ({ children, location, dispatch, app, loading }) => {
 
   const updatePassword = () => {
     const passwd = document.getElementById("passwd");
+    const repeatPasswd = document.getElementById("repeatpasswd");
+    if (passwd.value != repeatPasswd.value) {
+      message.error("两次密码不一致");
+      debugger
+      return;
+    }
     dispatch({
       type: "app/changePassword",
       payload: {
@@ -76,10 +82,17 @@ const App = ({ children, location, dispatch, app, loading }) => {
         uid: app.user.uid,
         callback: data => {
           if (data && data.success) {
-            message.success("更新成功");
+            message.success("更新成功,请重新登录");
             passwd.value = "";
+            repeatPasswd.value = "";
+            setTimeout(() => {
+              const href = loginPage.split("#")[0];
+              window.open(href, "_self");
+            }, 3000);
           } else {
-            message.error("更新失败");
+            passwd.value = "";
+            repeatPasswd.value = "";
+            message.error(data.message || "更新失败");
           }
         }
       }
@@ -148,12 +161,17 @@ const App = ({ children, location, dispatch, app, loading }) => {
 
       <Modal
         visible={app.passwordModalVisible}
-        title="修改密码(只是显示，不做真实的功能业务)"
+        title="修改密码"
         onOk={updatePassword}
-        okText="更新"
+        okText="保存"
         onCancel={() => dispatch({ type: "app/hidePasswordModal" })}
       >
-        <Input type="password" id="passwd" placeholder="请输入新的密码" />
+        <div>
+          <Input type="password" id="passwd" placeholder="请输入新的密码" />
+        </div>
+        <div style={{marginTop: '20px'}}>
+          <Input type="password" id="repeatpasswd" placeholder="确认新密码" />
+        </div>
       </Modal>
     </div>
   );

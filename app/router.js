@@ -24,6 +24,8 @@ module.exports = app => {
   const { router, controller } = app;
 
   router.post('/api/member/authorize', controller.member.authenticate);
+  router.post('/api/member/changepwd', controller.member.changepwd);
+
   router.get('/api/user/search', controller.user.search);
 
   router.get('/api/profile/detail', controller.profile.detail);

@@ -19,7 +19,7 @@ const postcssBasePlugins = [
 module.exports = {
   entry: {
     index: "./static/src/index.js",
-    mobile: "./static/src/mobile.js",
+    // mobile: "./static/src/mobile.js",
     vendor: ["react", "react-dom", "whatwg-fetch"]
   },
   output: {
@@ -139,12 +139,13 @@ module.exports = {
       minChunks: Infinity,
       filename: "public/js/[name].js"
     }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './static/src/index.html',
-      inject: true,
-      // chunks: ['vendor', 'index']
-    }),
+
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: './static/src/index.html',
+    //   inject: true,
+    //   chunks: ['vendor', 'index']
+    // }),
     // new HtmlWebpackPlugin({
     //   filename: 'mobile.html',
     //   template: './static/src/mobile.html',

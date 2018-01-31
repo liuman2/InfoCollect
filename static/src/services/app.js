@@ -17,10 +17,10 @@ export async function updatePassword(params) {
   const uid = params.uid;
 
   return request({
-    url: `/api/restql/users/${uid}`,
-    method: "put",
+    url: `/api/member/changepwd`,
+    method: "post",
     data: {
-      username: params.name,
+      uid: uid,
       password: params.password
     }
   });

@@ -23,7 +23,8 @@ module.exports = appInfo => {
     domainWhiteList: [
       'http://127.0.0.1:8001',
       'http://47.94.102.194:8001',
-      'http://localhost:8001'
+      'http://localhost:8001',
+      'http://127.0.0.1:8003'
     ],
     methodnoallow: { enable: false },
     csrf: {
