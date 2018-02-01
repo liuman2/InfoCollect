@@ -9,7 +9,7 @@ export default {
     loading: false,
     pagination: {
       current: 1,
-      pageSize: 5,
+      pageSize: 20,
       total: 0
     }
   },
@@ -42,7 +42,7 @@ export default {
           type: "loadUser",
           payload: {
             page: 1,
-            pageSize: 10
+            pageSize: 20
           }
         });
       } else {

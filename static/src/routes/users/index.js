@@ -1,17 +1,18 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "dva";
-import { Table, Button, Modal, Badge, Switch } from "antd";
+import { Table, Button, Modal, Badge, Switch, Row, Col, Form, Icon, Input } from "antd";
 import { DropOption } from "../../components";
 import moment from "moment";
 import { routerRedux } from "dva/router";
 
+const FormItem = Form.Item;
 const statusMap = ['processing', 'success', 'error'];
 const status = ['未审核', '通过', '不通过'];
 const gender = ['女', '男'];
 
 const columns = [
 	// { title: '序号', dataIndex: 'id' },
-	{ title: '名字', dataIndex: 'name' },
+	{ title: '姓名', dataIndex: 'name' },
 	{
 		title: '性别', dataIndex: 'gender',
 		filters: [
@@ -111,7 +112,7 @@ class Users extends Component {
 		);
 	}
 
-	loadUserData(page = 1, pageSize = 10) {
+	loadUserData(page = 1, pageSize = 20) {
 		this.props.dispatch({
 			type: "users/loadUsers",
 			payload: { page, pageSize }
@@ -122,62 +123,37 @@ class Users extends Component {
 		this.loadUserData(pagination.current, pagination.pageSize);
 	}
 
-	selectRow(selectedRowKeys) {
-		this.props.dispatch({
-			type: "tableManager/selectedRowKeys",
-			payload: { selectedRowKeys }
-		});
-	}
-	
-	changeTableManagerState(record) {
-		console.log("switchChange", record);
-		const status = record.status ? 0 : 1;
-		this.props.dispatch({
-			type: "tableManager/updateTableManager",
-			payload: {
-				...record,
-				status,
-				page: this.props.pagination.current,
-				pageSize: this.props.pagination.pageSize
-			}
-		});
+	handleSearch (e) {
+		e.preventDefault();
+		const { dispatch, form } = this.props;
+		form.validateFields((err, fieldsValue) => {
+      if (err) return;
+
+     console.log(fieldsValue)
+
+
+    });
 	}
 
-	deleteTableManager() {
-		if (this.props.selectedRowKeys.length > 0) {
-			Modal.confirm({
-				title: "确定要删除所选数据?",
-				content: "点击确定，数据则被删除",
-				onOk: () => {
-					let templateArr = [];
-					this.props.list.forEach((v, index) => {
-						if (this.props.selectedRowKeys.indexOf(v.id) !== -1) {
-							templateArr.push(v.template);
-						}
-					});
-					this.props.dispatch({
-						type: "tableManager/removeTableManager",
-						payload: {
-							selectedRowKeys: this.props.selectedRowKeys,
-							templateArr
-						}
-					});
-				}
-			});
-		} else {
-			Modal.warning({
-				title: "未选中任何数据",
-				content: "请选择要删除的数据"
-			});
-		}
-	}
+	renderForm() {
+    // const { getFieldDecorator } = this.props.form;
+    return (
+      <Form layout="inline">
+        <Row gutter={{ md: 8, lg: 16, xl: 32 }}>
+          <Col md={8} sm={16}>
+            <FormItem label="关键字">
+							<Input placeholder="姓名或联系电话" />
+            </FormItem>
+						<span>
+              <Button type="primary" onClick={this.handleSearch.bind(this)} >查询</Button>
+            </span>
+          </Col>
+        </Row>
+      </Form>
+    );
+  }
 
 	render() {
-		const rowSelection = {
-			selectedRowKeys: this.props.selectedRowKeys,
-			onChange: this.selectRow.bind(this)
-		};
-
 		const pagination = {
 			showTotal: total => `共${total}条数据`,
 			showSizeChanger: true,
@@ -187,25 +163,18 @@ class Users extends Component {
 
 		return (
 			<div className="content-inner">
-				{/* <div
+				<div
 					style={{
 						paddingBottom: 10,
 						marginBottom: 20,
 						borderBottom: "1px solid #ddd"
 					}}
 				>
-					<Button
-						onClick={this.toTableManagerForm.bind(this, 0)}
-						style={{ marginRight: 10 }}
-					>
-						新增
-					</Button>
-					<Button onClick={this.deleteTableManager.bind(this)}>删除</Button>
-				</div> */}
+					{this.renderForm()}
+				</div>
 
 				<Table
 					columns={columns}
-					rowSelection={rowSelection}
 					pagination={pagination}
 					dataSource={this.props.list}
 					rowKey="id"

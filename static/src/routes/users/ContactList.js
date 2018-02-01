@@ -44,7 +44,7 @@ class ContactList extends Component {
 		this.loadContactData();
 	}
 
-	loadContactData(page = 1, pageSize = 10) {
+	loadContactData(page = 1, pageSize = 20) {
 		const userId = this.props.userId;
 
 		this.props.dispatch({
