@@ -79,6 +79,9 @@ class Users extends Component {
 
 	constructor(props, context) {
 		super(props, context);
+		this.state = {
+			keyword: ''
+		}
 
 		const len = columns.length;
 
@@ -112,10 +115,10 @@ class Users extends Component {
 		);
 	}
 
-	loadUserData(page = 1, pageSize = 20) {
+	loadUserData(page = 1, pageSize = 20, keyword = '') {
 		this.props.dispatch({
 			type: "users/loadUsers",
-			payload: { page, pageSize }
+			payload: { page, pageSize, keyword }
 		});
 	}
 
@@ -124,25 +127,22 @@ class Users extends Component {
 	}
 
 	handleSearch (e) {
-		e.preventDefault();
-		const { dispatch, form } = this.props;
-		form.validateFields((err, fieldsValue) => {
-      if (err) return;
-
-     console.log(fieldsValue)
-
-
-    });
+		console.log(this.state.keyword)
+		this.loadUserData(1, 20, this.state.keyword);
 	}
+
+	onChange = (e) => {		
+		this.setState({ keyword: e.target.value });
+	}	
 
 	renderForm() {
     // const { getFieldDecorator } = this.props.form;
     return (
       <Form layout="inline">
-        <Row gutter={{ md: 8, lg: 16, xl: 32 }}>
+        <Row>
           <Col md={8} sm={16}>
             <FormItem label="关键字">
-							<Input placeholder="姓名或联系电话" />
+							<Input placeholder="姓名或联系电话" onChange={this.onChange} />
             </FormItem>
 						<span>
               <Button type="primary" onClick={this.handleSearch.bind(this)} >查询</Button>

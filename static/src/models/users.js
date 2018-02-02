@@ -25,7 +25,8 @@ export default {
         payload: {
           data,
           current: payload.page,
-          pageSize: payload.pageSize
+          pageSize: payload.pageSize,
+          keyword: payload.keyword || '',
         }
       });
       yield put({ type: "hideLoading" });

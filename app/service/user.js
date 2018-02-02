@@ -91,6 +91,8 @@ class UserService extends Service {
   }
 
   async search(query) {
+    app.mysql.query('select id, user_id, name, gender, card_no, address, contact, tel, status, date_created where name like ?', [`%${query.keyword}%`]);
+
     const results = await this.app.mysql.select('profile', { // 搜索 post 表
       // where: { status: 'draft', author: ['author1', 'author2'] }, // WHERE 条件
       columns: ['id', 'user_id', 'name', 'gender', 'card_no', 'address', 'contact', 'tel', 'status', 'date_created'],  // 要查询的表字段
