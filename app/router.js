@@ -49,6 +49,7 @@ module.exports = app => {
 
   router.post('/api/contact/import', controller.contact.import);
   router.get('/api/contact/search', controller.contact.search);
+  router.get('/api/loginlog/search', controller.loginlog.search);
 
   router.get('/api/test/get', controller.test.get);
   router.post('/api/test/post', controller.test.post);

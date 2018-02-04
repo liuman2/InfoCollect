@@ -14,6 +14,15 @@ class LoginlogController extends Controller {
     ctx.service.loginlog.log(request);
     ctx.body = true;
   }
+
+  async search() {
+    const { ctx } = this;
+    const query = ctx.query;
+
+    const response = await ctx.service.loginlog.search(query);
+    ctx.body = response;
+    ctx.status = 200;
+  }
 }
 
 module.exports = LoginlogController;

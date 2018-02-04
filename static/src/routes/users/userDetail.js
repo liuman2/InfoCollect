@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from "react";
 import { connect } from "dva";
 import UserView from "./UserView";
 import ContactList from "./ContactList";
+import LoginLog from "./LoginLog";
 import { routerRedux } from "dva/router";
 import {
 	Input,
@@ -186,6 +187,9 @@ class UserDetail extends Component {
 					</TabPane>
 					<TabPane tab="通信录" key="2">
 						<ContactList userId={profile.user_id} />
+					</TabPane>
+					<TabPane tab="登录日志" key="3">
+						<LoginLog userId={profile.user_id} />
 					</TabPane>
 				</Tabs>
 

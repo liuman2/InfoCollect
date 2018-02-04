@@ -57,7 +57,7 @@ const columns = [
 	{
 		title: '日期',
 		dataIndex: 'date_created',
-		render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+		render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm')}</span>,
 	},
 	{
 		title: '操作',

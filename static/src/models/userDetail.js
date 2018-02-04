@@ -3,6 +3,7 @@ import {
 	passProfile,
 	refuseProfile,
 	queryContact,
+	queryLoginLog,
 
 	update,
 	save,
@@ -19,7 +20,13 @@ const initState = {
 		current: 1,
 		pageSize: 20,
 		total: 0
-	}
+	},
+	loginLogList: [],
+	logPagination: {
+		current: 1,
+		pageSize: 20,
+		total: 0
+	},
 };
 
 export default {
@@ -52,22 +59,38 @@ export default {
 		},
 
 		*loadContacts({ payload }, { call, put }) {
-      yield put({ type: "showLoading" });
-      payload.sortField = "id";
-      payload.sortOrder = "desc";
-      const data = yield call(queryContact, payload);
-      yield put({
-        type: "loadContactSuccess",
-        payload: {
-          data,
-          current: payload.page,
+			yield put({ type: "showLoading" });
+			payload.sortField = "id";
+			payload.sortOrder = "desc";
+			const data = yield call(queryContact, payload);
+			yield put({
+				type: "loadContactSuccess",
+				payload: {
+					data,
+					current: payload.page,
 					pageSize: payload.pageSize,
 					keyword: payload.keyword || '',
-        }
-      });
-      yield put({ type: "hideLoading" });
-      // yield put({ type: "selectedRowKeys", payload: { selectedRowKeys: [] } });
-    },
+				}
+			});
+			yield put({ type: "hideLoading" });
+			// yield put({ type: "selectedRowKeys", payload: { selectedRowKeys: [] } });
+		},
+		*loadLoginLog({ payload }, { call, put }) {
+			yield put({ type: "showLoading" });
+			payload.sortField = "id";
+			payload.sortOrder = "desc";
+			const data = yield call(queryLoginLog, payload);
+			yield put({
+				type: "loadLoginLogSuccess",
+				payload: {
+					data,
+					current: payload.page,
+					pageSize: payload.pageSize,
+				}
+			});
+			yield put({ type: "hideLoading" });
+			// yield put({ type: "selectedRowKeys", payload: { selectedRowKeys: [] } });
+		},
 	},
 
 	reducers: {
@@ -104,19 +127,31 @@ export default {
 			}
 			return state;
 		},
-
 		loadContactSuccess(state, action) {
-      const actionData = action.payload.data;
-      return {
-        ...state,
-        contactList: actionData.record,
-        selectedRowKeys: [],
-        pagination: {
-          current: action.payload.current,
-          pageSize: action.payload.pageSize,
-          total: actionData.totalRecord || 0
-        }
-      };
-    }
+			const actionData = action.payload.data;
+			return {
+				...state,
+				contactList: actionData.record,
+				selectedRowKeys: [],
+				pagination: {
+					current: action.payload.current,
+					pageSize: action.payload.pageSize,
+					total: actionData.totalRecord || 0
+				}
+			};
+		},
+		loadLoginLogSuccess(state, action) {
+			const actionData = action.payload.data;
+			return {
+				...state,
+				loginLogList: actionData.record,
+				selectedRowKeys: [],
+				logPagination: {
+					current: action.payload.current,
+					pageSize: action.payload.pageSize,
+					total: actionData.totalRecord || 0
+				}
+			};
+		},
 	}
 };

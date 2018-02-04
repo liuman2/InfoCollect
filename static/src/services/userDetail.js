@@ -58,6 +58,14 @@ export async function queryContact(params) {
 	});
 }
 
+export async function queryLoginLog(params) {
+	return request({
+		url: "/api/loginlog/search",
+		method: "GET",
+		data: params
+	});
+}
+
 export async function save(params) {
 	return request({
 		url: "/api/restql/web_node",
