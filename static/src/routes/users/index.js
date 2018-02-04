@@ -97,7 +97,7 @@ class Users extends Component {
 				</div>
 			);
 		};
-	}	
+	}
 
 	componentDidMount() {
 		this.loadUserData();
@@ -123,35 +123,35 @@ class Users extends Component {
 	}
 
 	userChange(pagination) {
-		this.loadUserData(pagination.current, pagination.pageSize);
+		this.loadUserData(pagination.current, pagination.pageSize, this.state.keyword);
 	}
 
-	handleSearch (e) {
+	handleSearch(e) {
 		console.log(this.state.keyword)
 		this.loadUserData(1, 20, this.state.keyword);
 	}
 
-	onChange = (e) => {		
+	onChange = (e) => {
 		this.setState({ keyword: e.target.value });
-	}	
+	}
 
 	renderForm() {
-    // const { getFieldDecorator } = this.props.form;
-    return (
-      <Form layout="inline">
-        <Row>
-          <Col md={8} sm={16}>
-            <FormItem label="关键字">
+		// const { getFieldDecorator } = this.props.form;
+		return (
+			<Form layout="inline">
+				<Row>
+					<Col md={8} sm={16}>
+						<FormItem label="关键字">
 							<Input placeholder="姓名或联系电话" onChange={this.onChange} />
-            </FormItem>
+						</FormItem>
 						<span>
-              <Button type="primary" onClick={this.handleSearch.bind(this)} >查询</Button>
-            </span>
-          </Col>
-        </Row>
-      </Form>
-    );
-  }
+							<Button type="primary" onClick={this.handleSearch.bind(this)} >查询</Button>
+						</span>
+					</Col>
+				</Row>
+			</Form>
+		);
+	}
 
 	render() {
 		const pagination = {
