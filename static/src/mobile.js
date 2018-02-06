@@ -4,6 +4,7 @@ import "babel-polyfill";
 import dva from "dva";
 import createLoading from "dva-loading";
 import { hashHistory } from "dva/router";
+import 'antd-mobile/dist/antd-mobile.css';
 
 const app = dva({
   ...createLoading(),
@@ -13,6 +14,6 @@ const app = dva({
   }
 });
 
-// app.model(require("./models/mobile"));
-// app.router(require("./mobile_router"));
+app.model(require("./models/mobile"));
+app.router(require("./mobile_router"));
 app.start("#app");

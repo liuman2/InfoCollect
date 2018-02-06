@@ -131,7 +131,7 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"],
     modules: [sourcePath, "node_modules"]
-  },  
+  },
   plugins: [
     new ExtractTextPlugin("public/css/[name].css"),
     new webpack.optimize.CommonsChunkPlugin({
@@ -139,18 +139,5 @@ module.exports = {
       minChunks: Infinity,
       filename: "public/js/[name].js"
     }),
-
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: './static/src/index.html',
-    //   inject: true,
-    //   chunks: ['vendor', 'index']
-    // }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'mobile.html',
-    //   template: './static/src/mobile.html',
-    //   inject: true,
-    //   chunks: ['mobile']
-    // })
   ]
 };

@@ -1,0 +1,16 @@
+.avatar {
+  text-align: center;
+}
+.profile-face {
+  text-align: center;
+  width: 70px;
+  height: 70px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background: #ebf0f6;
+  overflow: hidden;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  margin: 10px auto;
+}

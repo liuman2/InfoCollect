@@ -8,14 +8,22 @@ import { Helmet } from "react-helmet";
 import "../components/skin.less";
 import Cookie from "../utils/js.cookie";
 import { withRouter } from "dva/router";
+import style from './mobile.css'
 
 const { Header, Bread, Footer, Sider, styles } = Layout;
 let loginPage = "";
 
 const App = ({ children, location, dispatch, mobile, loading }) => {
+  console.log(mobile)
   return (
     <div>
-      手机版
+      <div className="avatar">
+        <img className="profile-face" src="https://sfault-avatar.b0.upaiyun.com/368/958/368958767-58f71f4b5e79c_big64" />
+      </div>
+
+      <div>
+        <span>欢迎您，</span>
+      </div>
     </div>
   );
 };

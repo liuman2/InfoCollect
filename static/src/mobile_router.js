@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Router, Switch, Route, Redirect, routerRedux } from "dva/router";
 import dynamic from "dva/dynamic";
-import Mobile from "./routes/mobile";
+import Mobile from "./routes/mobile.jsx";
 
 const { ConnectedRouter } = routerRedux;
 
@@ -13,9 +13,9 @@ const Routers = function({ history, mobile }) {
   });
   const routes = [
     {
-      path: "/users",
-      models: () => [import("./models/users")],
-      component: () => import("./routes/users/index")
+      path: "/profile",
+      models: () => [import("./models/profile")],
+      component: () => import("./routes/profile/index")
     }
   ];
 
@@ -26,7 +26,7 @@ const Routers = function({ history, mobile }) {
           <Route
             exact
             path="/"
-            render={() => <Redirect to="/users" />}
+            render={() => <Redirect to="/profile" />}
           />
           {routes.map(({ path, ...dynamics }, key) => (
             <Route
