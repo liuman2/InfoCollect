@@ -19,7 +19,7 @@ const postcssBasePlugins = [
 module.exports = {
   entry: {
     index: "./static/src/index.js",
-    // mobile: "./static/src/mobile.js",
+    mobile: "./static/src/mobile.js",
     vendor: ["react", "react-dom", "whatwg-fetch"]
   },
   output: {
