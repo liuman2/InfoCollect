@@ -7,9 +7,11 @@ export default {
   namespace: "mobile",
   state: {
     login: false,
-    user: {
-      name: "",
-      uid: ""
+    loginUser: {
+      id: '',
+      mobile: '',
+      nick_name: '',
+      profileIsFull: false
     },
   },
   subscriptions: {
@@ -17,7 +19,25 @@ export default {
     }
   },
   effects: {
+    *signin({ payload }, { call, put }) {
+      yield put({ type: "showLoading" });
+      const data = yield call(login, payload);
+      yield put({
+        type: "signinSuccess",
+        payload: {
+          data,
+        }
+      });
+      yield put({ type: "hideLoading" });
+    },
   },
   reducers: {
+    signinSuccess(state, action) {
+      const actionData = action.payload.data;
+      return {
+        ...state,
+        loginUser: actionData
+      };
+    }
   }
 };
