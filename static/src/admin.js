@@ -1,19 +1,18 @@
-
-import "./mobile.html";
+import "./admin.html";
 import "babel-polyfill";
 import dva from "dva";
 import createLoading from "dva-loading";
+// import { browserHistory } from 'dva/router';
 import { hashHistory } from "dva/router";
-import 'antd-mobile/dist/antd-mobile.css';
 
 const app = dva({
   ...createLoading(),
   history: hashHistory,
   onError(error) {
-    console.error("mobile onError -- ", error);
+    console.error("app onError -- ", error);
   }
 });
 
-app.model(require("./models/mobile"));
-app.router(require("./mobile_router"));
+app.model(require("./models/app"));
+app.router(require("./router"));
 app.start("#app");

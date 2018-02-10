@@ -6,16 +6,26 @@ import Mobile from "./routes/mobile.jsx";
 
 const { ConnectedRouter } = routerRedux;
 
-const Routers = function({ history, mobile }) {
+const Routers = function({ history, app }) {
   const error = dynamic({
-    mobile,
+    app,
     component: () => import("./routes/error")
   });
   const routes = [
     {
       path: "/profile",
       models: () => [import("./models/profile")],
-      component: () => import("./routes/profile/index")
+      component: () => import("./routes/mobile/profile.jsx")
+    },
+    {
+      path: "/profile/detail/:id",
+      models: () => [import("./models/profile")],
+      component: () => import("./routes/mobile/profileView.jsx")
+    },
+    {
+      path: "/profile/detail/:id/protocol",
+      // models: () => [import("./models/profile")],
+      component: () => import("./routes/mobile/protocol.jsx")
     }
   ];
 
@@ -45,7 +55,7 @@ const Routers = function({ history, mobile }) {
 
 Routers.propTypes = {
   history: PropTypes.object,
-  mobile: PropTypes.object
+  app: PropTypes.object
 };
 
 export default Routers;

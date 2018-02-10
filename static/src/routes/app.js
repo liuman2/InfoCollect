@@ -71,7 +71,6 @@ const App = ({ children, location, dispatch, app, loading }) => {
     const repeatPasswd = document.getElementById("repeatpasswd");
     if (passwd.value != repeatPasswd.value) {
       message.error("两次密码不一致");
-      debugger
       return;
     }
     dispatch({

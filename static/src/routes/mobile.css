@@ -36,3 +36,10 @@
 .profile-message div {
   margin-bottom: 10px;
 }
+input[type="file"] {
+  position: absolute;
+  width: 250px;
+  right: -35px;
+  z-index: 9999;
+  opacity: 0;
+}

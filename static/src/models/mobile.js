@@ -1,10 +1,10 @@
-import { login } from "../services/mobile";
+import { login, profileInfo } from "../services/mobile";
 import { parse } from "qs";
 import { message } from "antd";
 import Cookie from "../utils/js.cookie";
 
 export default {
-  namespace: "mobile",
+  namespace: "lxhApp",
   state: {
     login: false,
     loginUser: {
@@ -12,7 +12,7 @@ export default {
       mobile: '',
       nick_name: '',
       profileIsFull: false
-    },
+    }
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -20,7 +20,6 @@ export default {
   },
   effects: {
     *signin({ payload }, { call, put }) {
-      yield put({ type: "showLoading" });
       const data = yield call(login, payload);
       yield put({
         type: "signinSuccess",
@@ -28,14 +27,23 @@ export default {
           data,
         }
       });
-      yield put({ type: "hideLoading" });
     },
+    *getProfileInfo({ payload }, { call, put }) {
+      const data = yield call(profileInfo, payload);
+      yield put({
+        type: "getProfileInfoSuccess",
+        payload: {
+          data,
+        }
+      });
+    }
   },
   reducers: {
     signinSuccess(state, action) {
       const actionData = action.payload.data;
       return {
         ...state,
+        login: true,
         loginUser: actionData
       };
     }

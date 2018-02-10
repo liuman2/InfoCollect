@@ -81,6 +81,7 @@ const fetch = async options => {
       const form = new FormData();
       form.append("file", data.file);
       authHeader.method = "post";
+      authHeader.headers = authHeader.headers || [];
       authHeader.headers["Content-Type"] = "multipart/form-data";
       return axios.post(url, form, authHeader);
     }

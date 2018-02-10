@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "dva";
-import { List, InputItem, Button, WhiteSpace, } from 'antd-mobile';
+import { List, InputItem, Button, WhiteSpace, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import styles from "./login.less";
 
@@ -12,19 +12,28 @@ class Login extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      mobile: '',
-      password: '',
-    };
+      isLoading: false
+    }
   }
 
   componentDidMount() {
-
+    
   }
 
-  doLogin(doLogin) {
-    const { mobile, password } = this.state;
+  onLogin() {
+    const mobile = this.props.form.getFieldValue('mobile').replace(/\s+/g, '');
+    const password = this.props.form.getFieldValue('password');
+    if (!mobile) {
+      Toast.info('手机不能为空');
+      return;
+    }
+    if (!password) {
+      Toast.info('密码不能为空');
+      return;
+    }
+    this.setState({isLoading: true});
     this.props.dispatch({
-      type: "mobile/signin",
+      type: "lxhApp/signin",
       payload: { mobile, password }
     });
   }
@@ -32,6 +41,7 @@ class Login extends Component {
 
   render() {
     const { getFieldProps } = this.props.form;
+    const { isLoading } = this.state;
     return (
       <div className={styles.loginPage}>
         <div className={styles.loginTitle}>
@@ -43,29 +53,34 @@ class Login extends Component {
         <List>
           <InputItem
             {...getFieldProps('mobile')}
-            type="phone"
+            // type="phone"
             placeholder="输入手机"
-          >手机号码</InputItem>
+          ></InputItem>
           <InputItem
             {...getFieldProps('password')}
             type="password"
-            placeholder="****"
-          >密码</InputItem>
+            placeholder="密码"
+          ></InputItem>
         </List>
         <div className={styles.loginButton}>
-          <Button className={styles.loginBtn}>登录</Button><WhiteSpace />
+          <Button
+            loading={isLoading}            
+            onClick={this.onLogin.bind(this)}
+            className={styles.loginBtn}
+          >
+            登录
+          </Button>
+          <WhiteSpace />
           <Button className={styles.registerBtn}>注册</Button><WhiteSpace />
+        </div>
+        <div className={styles.retriveBtn}>
+        <a>忘记密码</a>
         </div>
       </div>
     );
   }
 }
 
-export default connect(({ loginUser }) => {
-  console.log(loginUser)
-  return {
-
-  };
-})(createForm()(Login));
+export default connect()(createForm()(Login));
 
 // export default Form.create()(login);

@@ -12,7 +12,7 @@ class ProfileController extends Controller {
     if (!request.name) {
       ctx.throw(500, 'name不能为空');
     }
-    if (!request.gender) {
+    if (request.gender === null || request.gender === undefined) {
       ctx.throw(500, '性别不能为空');
     }
     if (!request.card_no) {
@@ -42,6 +42,7 @@ class ProfileController extends Controller {
 
     const profile = await ctx.service.profile.save(request);
     ctx.body = profile;
+    ctx.status = 200;
   }
 
   async get() {
@@ -52,6 +53,7 @@ class ProfileController extends Controller {
       success: profileInfo !== null,
       profile: profileInfo,
     };
+    ctx.status = 200;
   }
 
   async info() {
@@ -68,6 +70,7 @@ class ProfileController extends Controller {
         refuse:profileInfo.refuse,
       },
     };
+    ctx.status = 200;
   }
 
   async detail() {
