@@ -2,6 +2,7 @@ import axios from "axios";
 import qs from "qs";
 import config from "./config";
 import Cookie from "./js.cookie";
+import { Toast } from 'antd-mobile';
 
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -159,6 +160,7 @@ export default function request(options) {
     })
     .catch(error => {
       console.log(error);
+      Toast.info(error.response.data.message || '请求失败');
       return Promise.resolve(error);
     });
 }

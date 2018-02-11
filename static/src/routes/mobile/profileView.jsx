@@ -329,9 +329,9 @@ class ProfileView extends Component {
 	}
 }
 
-export default connect(({ lxhApp, profile }) => {
+export default connect(({ login, profile }) => {
 	return {
-		loginUserId: lxhApp.loginUser.id,
+		loginUserId: login.id,
 		profile: profile.detail
 	};
 })(createForm()(ProfileView));

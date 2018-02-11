@@ -93,8 +93,8 @@ class Protocal extends Component {
   }
 }
 
-export default connect(({ lxhApp }) => {
+export default connect(({ login }) => {
   return {
-    loginUserId: lxhApp.loginUser.id
+    loginUserId: login.id
   };
 })(Protocal);

@@ -1,7 +1,6 @@
 import React, { PropTypes } from "react";
 import { connect } from "dva";
-import Login from "./mobile/login";
-// import Profile from "./mobile/profile";
+// import Login from "./mobile/login";
 import { withRouter } from "dva/router";
 import style from './mobile.css'
 
@@ -13,7 +12,8 @@ const Mobile = ({ children, location, dispatch, lxhApp, loading }) => {
 
   return (
     <div>
-      {login ? <div>{children}</div> :<Login />}
+      {/* {login ? <div>{children}</div> :<Login />} */}
+      <div>{children}</div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { connect } from "dva";
 import { List, InputItem, Button, WhiteSpace, Toast } from 'antd-mobile';
+import { routerRedux } from "dva/router";
 import { createForm } from 'rc-form';
 import styles from "./login.less";
 
@@ -11,14 +12,11 @@ class Login extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      isLoading: false
-    }
   }
 
-  componentDidMount() {
-    
-  }
+  componentWillReceiveProps(nextProps, nextState) {
+		console.log(nextProps)
+	}
 
   onLogin() {
     const mobile = this.props.form.getFieldValue('mobile').replace(/\s+/g, '');
@@ -31,17 +29,19 @@ class Login extends Component {
       Toast.info('密码不能为空');
       return;
     }
-    this.setState({isLoading: true});
     this.props.dispatch({
-      type: "lxhApp/signin",
+      type: "login/signin",
       payload: { mobile, password }
     });
   }
 
+  onRegister() {
+    this.props.dispatch(routerRedux.replace({ pathname: `/agreement` }));
+  }
 
   render() {
     const { getFieldProps } = this.props.form;
-    const { isLoading } = this.state;
+    const { loading } = this.props;
     return (
       <div className={styles.loginPage}>
         <div className={styles.loginTitle}>
@@ -64,14 +64,20 @@ class Login extends Component {
         </List>
         <div className={styles.loginButton}>
           <Button
-            loading={isLoading}            
+            loading={loading.global}            
             onClick={this.onLogin.bind(this)}
             className={styles.loginBtn}
           >
             登录
           </Button>
           <WhiteSpace />
-          <Button className={styles.registerBtn}>注册</Button><WhiteSpace />
+          <Button
+            className={styles.registerBtn}
+            onClick={this.onRegister.bind(this)}
+          >
+            注册
+          </Button>
+          <WhiteSpace />
         </div>
         <div className={styles.retriveBtn}>
         <a>忘记密码</a>
@@ -81,6 +87,4 @@ class Login extends Component {
   }
 }
 
-export default connect()(createForm()(Login));
-
-// export default Form.create()(login);
+export default connect(({ loading }) => ({ loading }))(createForm()(Login));

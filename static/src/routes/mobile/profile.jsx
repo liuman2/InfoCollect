@@ -67,10 +67,11 @@ class Profile extends Component {
 	}
 }
 
-export default connect(({ lxhApp, profile }) => {
+export default connect(({ profile, login }) => {
+	let loginUserId = login ? login.id : '';
 	return {
-		loginUserId: lxhApp.loginUser.id,
-		profileIsFull: lxhApp.loginUser.profileIsFull,
+		loginUserId: loginUserId,
+		// profileIsFull: login.profileIsFull,
 		profile: profile.info
 	};
 })(Profile);

@@ -1,6 +1,7 @@
 import { profileInfo, upload, profileDetail } from "../services/mobile";
 import { parse } from "qs";
 import { message } from "antd";
+import { routerRedux } from 'dva/router'
 import Cookie from "../utils/js.cookie";
 
 export default {
@@ -44,6 +45,13 @@ export default {
   },
   effects: {
     *getProfileInfo({ payload }, { call, put }) {
+      const { userId } = payload;
+      if (!userId) {
+        yield put(routerRedux.push({
+          pathname: '/login'
+        }))
+        return;
+      }
       const data = yield call(profileInfo, payload);
       yield put({
         type: "getProfileInfoSuccess",

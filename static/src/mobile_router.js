@@ -24,9 +24,26 @@ const Routers = function({ history, app }) {
     },
     {
       path: "/profile/detail/:id/protocol",
-      // models: () => [import("./models/profile")],
       component: () => import("./routes/mobile/protocol.jsx")
-    }
+    },
+    {
+      path: "/login",
+      models: () => [import("./models/login")],
+      component: () => import("./routes/mobile/login.jsx")
+    },
+    {
+      path: "/agreement",
+      component: () => import("./routes/mobile/agreement.jsx")
+    },
+    {
+      path: "/agreement/detail",
+      component: () => import("./routes/mobile/agreementDetail.jsx")
+    },
+    {
+      path: "/register",
+      models: () => [import("./models/register")],
+      component: () => import("./routes/mobile/register.jsx")
+    },
   ];
 
   return (
