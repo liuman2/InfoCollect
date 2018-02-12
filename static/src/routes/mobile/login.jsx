@@ -15,14 +15,14 @@ class Login extends Component {
   }
 
   onLogin() {
-    const mobile = this.props.form.getFieldValue('mobile').replace(/\s+/g, '');
-    const password = this.props.form.getFieldValue('password');
+    const mobile = this.props.form.getFieldValue('mobile').replace(/\s+/g, '') || '';
+    const password = this.props.form.getFieldValue('password') || '';
     if (!mobile) {
-      Toast.info('手机不能为空');
+      Toast.info('手机不能为空', 3, null ,false);
       return;
     }
     if (!password) {
-      Toast.info('密码不能为空');
+      Toast.info('密码不能为空', 3, null ,false);
       return;
     }
     this.props.dispatch({
@@ -30,7 +30,7 @@ class Login extends Component {
       payload: { mobile, password }
     }).catch((e) => {
       Toast.info(e.response.data.message || '登录失败')
-    }) ;
+    });
   }
 
   onRegister() {

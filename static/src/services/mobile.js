@@ -48,3 +48,11 @@ export async function saveDetail(profile) {
     data: profile
   });
 }
+
+export async function sendVerify(params) {
+  return request({
+    url: "/api/sms/verify",
+    method: "POST",
+    data: params
+  });
+}

@@ -108,40 +108,40 @@ class ProfileView extends Component {
 			profile.protocol = profile.protocols.join(',');
 		}
 		if (!profile.name) {
-			Toast.info('请输入姓名');
+			Toast.info('请输入姓名', 3, null ,false);
 			return;
 		}
 		if (!profile.card_no) {
-			Toast.info('请输入身份证号码');
+			Toast.info('请输入身份证号码', 3, null ,false);
 			return;
 		}
 
 		if (!profile.card_front) {
-			Toast.info('请上传身份证正面照');
+			Toast.info('请上传身份证正面照', 3, null ,false);
 			return;
 		}
 		if (!profile.card_back) {
-			Toast.info('请上传身份证背面照');
+			Toast.info('请上传身份证背面照', 3, null ,false);
 			return;
 		}
 		if (!profile.card_hold) {
-			Toast.info('请上传手持身份证照片');
+			Toast.info('请上传手持身份证照片', 3, null ,false);
 			return;
 		}
 		if (!profile.contact) {
-			Toast.info('请输入联系人姓名');
+			Toast.info('请输入联系人姓名', 3, null ,false);
 			return;
 		}
 		if (!profile.address) {
-			Toast.info('请输入家庭住址');
+			Toast.info('请输入家庭住址', 3, null ,false);
 			return;
 		}
 		if (!profile.tel) {
-			Toast.info('请输入联系人电话');
+			Toast.info('请输入联系人电话', 3, null ,false);
 			return;
 		}
 		if (!profile.protocols.length) {
-			Toast.info('请上传用户协议');
+			Toast.info('请上传用户协议', 3, null ,false);
 			return;
 		}
 		const { loginUserId } = this.props;
@@ -156,7 +156,7 @@ class ProfileView extends Component {
 			result = rsp.response.data;
 		}
 		if (!result.success) {
-			Toast.info(result.message || '保存失败');
+			Toast.info(result.message || '保存失败', 3, null ,false);
 			return;
 		}
 		Toast.info(profile.status !== 1 ? '保存成功, 请等待审核' : '保存成功', 1, () => {

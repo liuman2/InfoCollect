@@ -9,12 +9,14 @@ class SmsController extends Controller {
     if (!request.mobile) {
       this.ctx.throw(500, '手机不能为空');
     }
+    
     const header = new Buffer(encodeURIComponent(`${request.mobile}:${request.type}`).toLocaleLowerCase()).toString('base64');
     if (ctx.request.headers['lxh-sms'] !== `lxh-app ${header}`) {
       this.ctx.throw(500, '您没有权限获取验证码');
     }
-
-    await ctx.service.sms.sendSms(request);
+    if (request.mobile !== '15359228303') {
+      await ctx.service.sms.sendSms(request);
+    }
     ctx.body = true;
   }
 }
