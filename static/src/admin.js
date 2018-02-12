@@ -5,7 +5,7 @@ import createLoading from "dva-loading";
 // import { browserHistory } from 'dva/router';
 import { hashHistory } from "dva/router";
 
-const app = dva({
+const admin = dva({
   ...createLoading(),
   history: hashHistory,
   onError(error) {
@@ -13,6 +13,6 @@ const app = dva({
   }
 });
 
-app.model(require("./models/app"));
-app.router(require("./router"));
-app.start("#app");
+admin.model(require("./models/app"));
+admin.router(require("./router"));
+admin.start("#app");

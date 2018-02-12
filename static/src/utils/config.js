@@ -10,5 +10,7 @@ module.exports = {
   // iconFontUrl: './assets/znfont.js',
   devBaseURL: "http://127.0.0.1:8001",
   prdBaseURL: "http://127.0.0.1:8001",
-  attachmentURL: "http://127.0.0.1:8001/public/uploads"
+  attachmentURL: "http://127.0.0.1:8001/public/uploads",
+  head: "http://127.0.0.1:8001/public/assets/user-photo.png",
+  card: "http://127.0.0.1:8001/public/assets/id-card.png",
 };

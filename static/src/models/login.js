@@ -31,7 +31,12 @@ export default {
       yield put(routerRedux.push({
         pathname: '/profile',
       }))
-    }
+    },
+    *setfullProfile({ payload }, { call, put }) {
+      yield put({
+        type: "profileFull"
+      });
+    },
   },
   reducers: {
     signinSuccess(state, action) {
@@ -42,6 +47,12 @@ export default {
         mobile: actionData.mobile,
         nick_name: actionData.nick_name,
         profileIsFull: actionData.profileIsFull,
+      };
+    },
+    profileFull(state) {
+      return {
+        ...state,
+        profileIsFull: true,
       };
     }
   }

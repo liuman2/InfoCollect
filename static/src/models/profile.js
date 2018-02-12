@@ -91,6 +91,11 @@ export default {
     },
     getProfileDetailSuccess(state, action) {
       const actionData = action.payload.data;
+      if (actionData.profile === null) {
+        return {
+          ...state
+        };
+      }
       actionData.profile.protocols = [];
       if (actionData.profile.protocol) {
         actionData.profile.protocols = actionData.profile.protocol.split(',');

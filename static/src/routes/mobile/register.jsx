@@ -21,6 +21,7 @@ class Register extends Component {
 
   onBack() {
     // this.props.dispatch(routerRedux.replace({ pathname: `/profile/detail/${loginUserId}` }));
+    this.props.dispatch(routerRedux.replace({ pathname: '/login' }));
   }
 
   async onRegister() {
@@ -64,9 +65,16 @@ class Register extends Component {
         verify: verify
       }
     }).then((data) => {
-      
+      if(!data.success) {
+        Toast.info(data.message || '注册失败', 3, null ,false);
+        return;
+      }
+
+      Toast.info('注册成功，请登录', 3, () => {
+        this.props.dispatch(routerRedux.replace({ pathname: '/login' }));
+      }, true);
     }).catch((e) => {
-      Toast.info(e.response.data.message || '获取失败')
+      Toast.info(e.response.data.message || '注册失败', 3, null ,false)
     });
   }
 

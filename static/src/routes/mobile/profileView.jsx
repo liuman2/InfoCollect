@@ -4,7 +4,7 @@ import { routerRedux } from "dva/router";
 import { List, InputItem, WhiteSpace, NavBar, Icon, Button, Toast } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import styles from "./profile.less";
-import { request } from "../../utils";
+import { config, request } from "../../utils";
 const Item = List.Item;
 
 class ProfileView extends Component {
@@ -33,7 +33,7 @@ class ProfileView extends Component {
 				address: '',
 				contact: '',
 				tel: '',
-				status: 1,
+				status: 0,
 				refuse: null,
 				date_created: '',
 				date_modify: '',
@@ -44,12 +44,21 @@ class ProfileView extends Component {
 
 	componentDidMount() {
 		const { loginUserId } = this.props;
-		this.loadProfile(loginUserId)
+		this.loadProfile(loginUserId);
+		// setTimeout(() => {
+		// 	const {  profile } = this.props;
+		// 	if(!profile.id) {
+		// 		this.setState({
+		// 			isEditable: true
+		// 		});
+		// 	}
+		// }, 1000)
 	}
 
 	componentWillReceiveProps(nextProps, nextState) {
 		const { profile: detail } = nextProps;
 		const sessionProfile = window.sessionStorage.getItem('PROFILE');
+
 		if (sessionProfile !== null) {
 			const sProfile = JSON.parse(sessionProfile);
 			const sProtocol = window.sessionStorage.getItem('PROTOCOL');
@@ -71,6 +80,26 @@ class ProfileView extends Component {
 		this.props.dispatch({
 			type: "profile/detail",
 			payload: { userId }
+		}).then(() => {
+			const { profile } = this.props;
+			if (!profile.id) {
+				this.setState({
+					isEditable: true
+				});
+
+				const sessionProfile = window.sessionStorage.getItem('PROFILE');
+				if (sessionProfile !== null) {
+					const sProfile = JSON.parse(sessionProfile);
+					const sProtocol = window.sessionStorage.getItem('PROTOCOL');
+					sProfile.protocols = sProtocol.split(',');
+					this.setState({
+						profile: Object.assign({}, sProfile),
+						isEditable: true
+					});
+					window.sessionStorage.removeItem('PROFILE');
+					window.sessionStorage.removeItem('PROTOCOL');
+				}
+			}
 		});
 	}
 
@@ -108,60 +137,65 @@ class ProfileView extends Component {
 			profile.protocol = profile.protocols.join(',');
 		}
 		if (!profile.name) {
-			Toast.info('请输入姓名', 3, null ,false);
+			Toast.info('请输入姓名', 3, null, false);
 			return;
 		}
 		if (!profile.card_no) {
-			Toast.info('请输入身份证号码', 3, null ,false);
+			Toast.info('请输入身份证号码', 3, null, false);
 			return;
 		}
 
 		if (!profile.card_front) {
-			Toast.info('请上传身份证正面照', 3, null ,false);
+			Toast.info('请上传身份证正面照', 3, null, false);
 			return;
 		}
 		if (!profile.card_back) {
-			Toast.info('请上传身份证背面照', 3, null ,false);
+			Toast.info('请上传身份证背面照', 3, null, false);
 			return;
 		}
 		if (!profile.card_hold) {
-			Toast.info('请上传手持身份证照片', 3, null ,false);
+			Toast.info('请上传手持身份证照片', 3, null, false);
 			return;
 		}
 		if (!profile.contact) {
-			Toast.info('请输入联系人姓名', 3, null ,false);
+			Toast.info('请输入联系人姓名', 3, null, false);
 			return;
 		}
 		if (!profile.address) {
-			Toast.info('请输入家庭住址', 3, null ,false);
+			Toast.info('请输入家庭住址', 3, null, false);
 			return;
 		}
 		if (!profile.tel) {
-			Toast.info('请输入联系人电话', 3, null ,false);
+			Toast.info('请输入联系人电话', 3, null, false);
 			return;
 		}
 		if (!profile.protocols.length) {
-			Toast.info('请上传用户协议', 3, null ,false);
+			Toast.info('请上传用户协议', 3, null, false);
 			return;
 		}
 		const { loginUserId } = this.props;
 		profile.user_id = loginUserId;
+		let saveObj = Object.assign({}, profile);
+		delete saveObj.protocols;
 		const rsp = await request({
 			url: "/api/profile/save",
 			method: "POST",
-			data: profile
+			data: saveObj
 		});
 		let result = rsp;
 		if (rsp.response) {
 			result = rsp.response.data;
 		}
 		if (!result.success) {
-			Toast.info(result.message || '保存失败', 3, null ,false);
+			Toast.info(result.message || '保存失败', 3, null, false);
 			return;
 		}
-		Toast.info(profile.status !== 1 ? '保存成功, 请等待审核' : '保存成功', 1, () => {
+		this.props.dispatch({
+			type: "login/setfullProfile"
+		});
+		Toast.info(profile.status !== 1 ? '保存成功, 请等待审核' : '保存成功', 3, () => {
 			this.onBack();
-		}, true)
+		}, true);
 	}
 	onCancel() {
 		const { profile: detail } = this.props;
@@ -243,7 +277,7 @@ class ProfileView extends Component {
 					<Item
 						extra={
 							<div className={styles.imgWrap}>
-								<img src={profile.card_front} />
+								<img src={profile.card_front || config.card} />
 								{isEditable && status !== 1 ? <input type="file" accept="image/jpeg,image/jpg,image/png" onChange={(e) => { this.onChange.bind(this)(e.target.files[0], 'card_front') }} /> : null}
 							</div>
 						}
@@ -254,7 +288,7 @@ class ProfileView extends Component {
 					<Item
 						extra={
 							<div className={styles.imgWrap}>
-								<img src={profile.card_back} />
+								<img src={profile.card_back || config.card} />
 								{isEditable && status !== 1 ? <input type="file" accept="image/jpeg,image/jpg,image/png" onChange={(e) => { this.onChange.bind(this)(e.target.files[0], 'card_back') }} /> : null}
 							</div>
 						}
@@ -265,7 +299,7 @@ class ProfileView extends Component {
 					<Item
 						extra={
 							<div className={styles.imgWrap}>
-								<img src={profile.card_hold} />
+								<img src={profile.card_hold || config.card} />
 								{isEditable && status !== 1 ? <input type="file" accept="image/jpeg,image/jpg,image/png" onChange={(e) => { this.onChange.bind(this)(e.target.files[0], 'card_hold') }} /> : null}
 							</div>
 						}
@@ -276,7 +310,7 @@ class ProfileView extends Component {
 					<Item
 						extra={
 							<div className={styles.imgWrap}>
-								<img src={profile.self_photo} />
+								<img src={profile.self_photo || config.card} />
 								{isEditable ? <input type="file" accept="image/jpeg,image/jpg,image/png" onChange={(e) => { this.onChange.bind(this)(e.target.files[0], 'self_photo') }} /> : null}
 							</div>
 						}

@@ -15,9 +15,9 @@ class Login extends Component {
   }
 
   onLogin() {
-    const mobile = this.props.form.getFieldValue('mobile').replace(/\s+/g, '') || '';
+    const mobile = this.props.form.getFieldValue('mobile') || '';
     const password = this.props.form.getFieldValue('password') || '';
-    if (!mobile) {
+    if (!mobile.replace(/\s+/g, '')) {
       Toast.info('手机不能为空', 3, null ,false);
       return;
     }
@@ -78,7 +78,7 @@ class Login extends Component {
           <WhiteSpace />
         </div>
         <div className={styles.retriveBtn}>
-        <a>忘记密码</a>
+        {/* <a>忘记密码</a> */}
         </div>
       </div>
     );

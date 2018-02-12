@@ -11,6 +11,7 @@ class ProfileService extends Service {
     if (profile === null) {
       req.status = 0;
       req.date_created = new Date().toLocaleString();
+      req.date_modify = null;
       result = await this.app.mysql.insert('profile', req);
     } else {
       profile.name = req.name;
