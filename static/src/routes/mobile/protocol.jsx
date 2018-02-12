@@ -5,10 +5,6 @@ import { ImagePicker, Toast, NavBar, Icon } from 'antd-mobile';
 import { request } from "../../utils";
 
 class Protocal extends Component {
-  static contextTypes = {
-    router: PropTypes.object
-  };
-
   constructor(props, context) {
     super(props, context);
     this.state = {

@@ -41,7 +41,7 @@ const Routers = function({ history, app }) {
     },
     {
       path: "/register",
-      models: () => [import("./models/register")],
+      // models: () => [import("./models/register")],
       component: () => import("./routes/mobile/register.jsx")
     },
   ];

@@ -26,6 +26,10 @@ class Agreement extends Component {
 		window.location.href = '#/login';
 	}
 
+	onRegister() {
+		window.location.href = '#/register';
+	}
+
 	render() {
 		return (
 			<div className="profile">
@@ -46,6 +50,7 @@ class Agreement extends Component {
 					<Button
 						type='primary'
 						className={styles.listBottomLeft}
+						onClick={this.onRegister.bind(this)}
 					>同意</Button>
 					<Button
 						className={styles.listBottomRight}

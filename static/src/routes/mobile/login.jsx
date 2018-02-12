@@ -14,10 +14,6 @@ class Login extends Component {
     super(props, context);
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-		console.log(nextProps)
-	}
-
   onLogin() {
     const mobile = this.props.form.getFieldValue('mobile').replace(/\s+/g, '');
     const password = this.props.form.getFieldValue('password');
@@ -32,7 +28,9 @@ class Login extends Component {
     this.props.dispatch({
       type: "login/signin",
       payload: { mobile, password }
-    });
+    }).catch((e) => {
+      Toast.info(e.response.data.message || '登录失败')
+    }) ;
   }
 
   onRegister() {

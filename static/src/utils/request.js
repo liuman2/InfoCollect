@@ -158,9 +158,9 @@ export default function request(options) {
     .then(response => {
       return response.data;
     })
-    .catch(error => {
-      console.log(error);
-      Toast.info(error.response.data.message || '请求失败');
-      return Promise.resolve(error);
-    });
+    // .catch(error => {
+    //   console.log(error);
+    //   Toast.info(error.response.data.message || '请求失败');
+    //   return Promise.resolve(error);
+    // });
 }
