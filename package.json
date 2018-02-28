@@ -89,6 +89,7 @@
     "react-dom": "^15.4.1",
     "react-draft-wysiwyg": "^1.8.1",
     "react-helmet": "^5.0.0",
+    "react-image-lightbox": "4.5.0",
     "react-router": "^2.8.1",
     "rndm": "^1.2.0",
     "rucksack-css": "^0.9.1",
