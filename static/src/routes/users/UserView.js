@@ -127,7 +127,6 @@ class UserView extends Component {
 										})
 									}>
 										<img src={item} style={{ width: '100px' }} />
-										{index}
 									</a>
 								);
 							})
